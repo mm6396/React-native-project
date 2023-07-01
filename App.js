@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // Import the screen components from their files
 import HomeScreen from './src/screens/HomeScreen';
@@ -10,27 +9,18 @@ import FeedbackScreen from './src/screens/FeedbackScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import ReserveScreen from './src/screens/ReserveScreen';
 
-const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
-
-const MainStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="About" component={AboutScreen} />
-      <Stack.Screen name="Feedback" component={FeedbackScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="Reserve" component={ReserveScreen} />
-    </Stack.Navigator>
-  );
-};
+const Tab = createMaterialTopTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Main" component={MainStack} />
-      </Drawer.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="About" component={AboutScreen} />
+        <Tab.Screen name="Feedback" component={FeedbackScreen} />
+        <Tab.Screen name="Register" component={RegisterScreen} />
+        <Tab.Screen name="Reserve" component={ReserveScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
