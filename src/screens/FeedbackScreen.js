@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
-import { Button, TextInput, View } from 'react-native';
+import { Button, TextInput, View, StyleSheet } from 'react-native';
 
 const FeedbackScreen = () => {
   const [text, setText] = useState('')
 
   const handleSubmit = () => {
-    // Here you'd typically make a request to your backend API to send the email.
-    // For now, we'll just log the text.
-    console.log(text);
-    // After sending text to backend, clear the textbox
-    setText('')
-  }
+    // Send a POST request to the Express server
+    fetch('http://localhost:3000/send-feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ feedback: text })
+    })
+    .then(response => response.text())
+    .then(text => console.log(text))
+    .catch(error => console.log(error));
+
+    // Clear the textbox
+    setText('');
+  };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        style={styles.input}
+        placeholder="Enter your feedback here"
         onChangeText={setText}
         value={text}
       />
@@ -23,5 +33,20 @@ const FeedbackScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 16,
+    padding: 8,
+  },
+});
 
 export default FeedbackScreen;
